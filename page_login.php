@@ -1,6 +1,9 @@
 <?php 
 session_start();
 require_once 'functions/register.php';
+if(isset($_SESSION['id'])){
+    redirectTo('users.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

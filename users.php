@@ -1,3 +1,11 @@
+<?php
+session_start();
+require 'functions/register.php';
+if(!isset($_SESSION['id'])){
+    redirectTo('page_login.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
