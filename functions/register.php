@@ -10,7 +10,7 @@ function redirectTo($path){
     exit;
 }
 
-function alreadyRegistered($email){
+function findUserByEmail($email){
     $pdo = dbConnect();
     $sql = "SELECT * FROM users WHERE email=:email";
     $statement = $pdo->prepare($sql);
@@ -18,6 +18,11 @@ function alreadyRegistered($email){
         "email" => $email,
     ]);
     $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+function alreadyRegistered($email){
+    $result = findUserByEmail($email);
     return !empty($result);
 }
 
@@ -29,4 +34,29 @@ function registerUser($email, $password){
         "email" => $email,
         "password" => password_hash($password, PASSWORD_DEFAULT)
     ]);
+}
+
+function userExists($email){
+    $user = findUserByEmail($email);
+    if(empty($user)){
+        return false;
+    }
+    return true;
+}
+
+function userVerify($email, $password){
+    $user = findUserByEmail($email);
+    $hashed_password = $user['password'];
+    if(password_verify($password, $hashed_password)){
+        return true;
+    }
+    return false;
+}
+
+function createFlash($key, $message){
+    $_SESSION[$key] = $message;
+}
+
+function showFlash($key){
+    echo $_SESSION[$key];
 }

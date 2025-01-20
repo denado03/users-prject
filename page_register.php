@@ -1,4 +1,6 @@
-<?php session_start() ?>
+<?php session_start();
+require_once 'functions/register.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,7 +64,7 @@
                                 <div class="card p-4 rounded-plus bg-faded">
                                     <?php if(isset($_SESSION['registered'])): ?>
                                     <div class="alert alert-danger text-dark" role="alert">
-                                        <strong>Уведомление!</strong> <?=$_SESSION['registered'];
+                                        <strong>Уведомление!</strong> <?php showFlash('registered');
                                         unset($_SESSION['registered']);
                                         ?>
                                     </div>

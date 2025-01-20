@@ -1,4 +1,7 @@
-<?php session_start(); ?>
+<?php 
+session_start();
+require_once 'functions/register.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,18 +39,24 @@
         <div class="card p-4 border-top-left-radius-0 border-top-right-radius-0">
         <?php if(isset($_SESSION['success'])): ?>    
             <div class="alert alert-success">
-                <?=$_SESSION['success']; 
-                unset($_SESSION['registered']);?>
+                <?php showFlash('success'); 
+                unset($_SESSION['success']);?>
             </div>
         <?php endif; ?>
-            <form action="">
+        <?php if(isset($_SESSION['warning'])): ?>    
+            <div class="alert alert-warning">
+                <?php showFlash('warning'); 
+                unset($_SESSION['warning']);?>
+            </div>
+        <?php endif; ?>
+            <form action="login.php" method="POST">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
-                    <input type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">
+                    <input name="email" type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">
                 </div>
                 <div class="form-group">
                     <label class="form-label" for="password">Пароль</label>
-                    <input type="password" id="password" class="form-control" placeholder="" >
+                    <input name="password" type="password" id="password" class="form-control" placeholder="" >
                 </div>
                 <button type="submit" class="btn btn-default float-right">Войти</button>
             </form>
