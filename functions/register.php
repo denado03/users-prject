@@ -1,15 +1,5 @@
 <?php 
-
-function dbConnect(){
-    $pdo = new PDO('mysql:host=localhost;dbname=diplom', 'root', '');
-    return $pdo;
-}
-
-function redirectTo($path){
-    header("Location: $path");
-    exit;
-}
-
+require 'helpers.php';
 function findUserByEmail($email){
     $pdo = dbConnect();
     $sql = "SELECT * FROM users WHERE email=:email";
@@ -18,6 +8,15 @@ function findUserByEmail($email){
         "email" => $email,
     ]);
     $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+function getAllUsers(){
+    $pdo = dbConnect();
+    $sql = "SELECT * FROM users";
+    $statement = $pdo->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
 
@@ -53,10 +52,35 @@ function userVerify($email, $password){
     return false;
 }
 
-function createFlash($key, $message){
-    $_SESSION[$key] = $message;
+function login($email){
+    $user = findUserByEmail($email);
+    $userInfo = [
+        'id' => $user['id'],
+        'email' => $user['email'],
+        'role' => $user['role']
+    ];
+    return $_SESSION['user'] = $userInfo;
 }
 
-function showFlash($key){
-    echo $_SESSION[$key];
+function isLoggedIn(){
+    if(isset($_SESSION['user'])){
+        return true;
+    } 
+    return false;
 }
+
+function getAuthenticatedUser(){
+    if(isLoggedIn()){
+        return $_SESSION['user'];
+    }
+    return false;
+}
+
+function isAdmin($user){
+    if($user['role'] === 'admin'){
+        return true;
+    }
+    return false;
+
+}
+

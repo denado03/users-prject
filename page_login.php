@@ -1,7 +1,8 @@
 <?php 
 session_start();
 require_once 'functions/register.php';
-if(isset($_SESSION['id'])){
+require_once 'functions/helpers.php';
+if(isLoggedIn()){
     redirectTo('users.php');
 }
 ?>

@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once "functions/register.php";
+require 'functions/helpers.php';
 
 $email = $_POST['email'];
 $password = $_POST['password'];
