@@ -38,7 +38,7 @@ $users = getAllUsers();
                         <a class="nav-link" href="page_login.html">Войти</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Выйти</a>
+                        <a class="nav-link" href="logout.php">Выйти</a>
                     </li>
                 </ul>
             </div>
