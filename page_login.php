@@ -2,6 +2,7 @@
 session_start();
 require_once 'functions/register.php';
 require_once 'functions/helpers.php';
+
 if(isLoggedIn()){
     redirectTo('users.php');
 }
@@ -53,7 +54,7 @@ if(isLoggedIn()){
                 unset($_SESSION['warning']);?>
             </div>
         <?php endif; ?>
-            <form action="login.php" method="POST">
+            <form action="model/login.php" method="POST">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
                     <input name="email" type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">

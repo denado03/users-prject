@@ -1,6 +1,7 @@
 <?php session_start();
 require_once 'functions/register.php';
 require_once 'functions/helpers.php';
+
 if(isLoggedIn()){
     redirectTo('users.php');
 }
@@ -73,7 +74,7 @@ if(isLoggedIn()){
                                         ?>
                                     </div>
                                     <?php endif; ?>
-                                    <form id="js-login" novalidate="" action="register.php" method="POST">
+                                    <form id="js-login" novalidate="" action="model/register.php" method="POST">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
                                             <input type="email" name="email" id="emailverify" class="form-control" placeholder="Эл. адрес" required>

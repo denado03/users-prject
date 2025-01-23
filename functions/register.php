@@ -1,5 +1,5 @@
 <?php 
-require 'helpers.php';
+require_once 'helpers.php';
 function findUserByEmail($email){
     $pdo = dbConnect();
     $sql = "SELECT * FROM users WHERE email=:email";
