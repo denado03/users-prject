@@ -1,3 +1,16 @@
+<?php
+session_start();
+require_once 'functions/helpers.php';
+require_once 'functions/register.php';
+
+if(!isLoggedIn()){
+    redirectTo('page_login.php');
+}
+
+$user = getUserById($_GET['id']);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,19 +27,19 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-primary-gradient">
-        <a class="navbar-brand d-flex align-items-center fw-500" href="users.html"><img alt="logo" class="d-inline-block align-top mr-2" src="img/logo.png"> Учебный проект</a> <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor02" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
+        <a class="navbar-brand d-flex align-items-center fw-500" href="users.php"><img alt="logo" class="d-inline-block align-top mr-2" src="img/logo.png"> Учебный проект</a> <button aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler" data-target="#navbarColor02" data-toggle="collapse" type="button"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarColor02">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="users.php">Главная <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="page_login.html">Войти</a>
+                    <a class="nav-link" href="page_login.php">Войти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
+                    <a class="nav-link" href="controllers/logout.php">Выйти</a>
                 </li>
             </ul>
         </div>
@@ -38,33 +51,38 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="controllers/security.php" method="POST">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
                         <div class="panel-container">
                             <div class="panel-hdr">
                                 <h2>Обновление эл. адреса и пароля</h2>
+                                <?php if(isset($_SESSION['danger'])): ?>
+                                <h5><?php showFlash('danger');
+                                unset($_SESSION['danger']);
+                                ?></h5>
+                                <?php endif; ?>
                             </div>
                             <div class="panel-content">
                                 <!-- email -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Email</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="john@example.com">
+                                    <input name="email" type="text" id="simpleinput" class="form-control" value="<?=$user['email']?>">
                                 </div>
 
                                 <!-- password -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Пароль</label>
-                                    <input type="password" id="simpleinput" class="form-control">
+                                    <input name="password" type="password" id="simpleinput" class="form-control">
                                 </div>
 
                                 <!-- password confirmation-->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Подтверждение пароля</label>
-                                    <input type="password" id="simpleinput" class="form-control">
+                                    <input name="passwordConfirm" type="password" id="simpleinput" class="form-control">
                                 </div>
-
+                                <input type="hidden" name="id" value="<?=$_GET['id']?>">
 
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
                                     <button class="btn btn-warning">Изменить</button>

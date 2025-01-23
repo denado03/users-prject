@@ -1,6 +1,7 @@
 <?php
 
 require_once 'helpers.php';
+require_once 'register.php';
 
 function addUser($email, $password){
     $pdo = dbConnect();
@@ -69,6 +70,35 @@ function uploadImage($image, $userId){
     $statement->execute([
         "image" => $filePath,
         "id" => $userId
+    ]);
+}
+
+function passwordsEqual($password, $passwordConfirm){
+    if($password === $passwordConfirm){
+        return true;
+    }
+    return false;
+}
+function editSecurity($email, $password, $id){
+    $pdo = dbConnect();
+    $sql = "UPDATE users 
+            SET email = :email,
+            password = :password
+            WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "email" => $email,
+        "password" => $password,
+        "id" => $id
+    ]);
+}
+
+function deleteUser($id){
+    $pdo = dbConnect();
+    $sql = "DELETE FROM users WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id
     ]);
 }
 

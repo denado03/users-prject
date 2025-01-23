@@ -96,20 +96,20 @@ $users = getAllUsers();
                                         
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="edit.php?id=<?=$user['id']?>">
+                                        <a class="dropdown-item" href="edit.php?id=<?=$user['id'];?>">
                                             <i class="fa fa-edit"></i>
                                         Редактировать</a>
-                                        <a class="dropdown-item" href="security.html">
+                                        <a class="dropdown-item" href="security.php?id=<?=$user['id'];?>">
                                             <i class="fa fa-lock"></i>
                                         Безопасность</a>
                                         <a class="dropdown-item" href="status.html">
                                             <i class="fa fa-sun"></i>
                                         Установить статус</a>
-                                        <a class="dropdown-item" href="media.html">
+                                        <a class="dropdown-item" href="media.php?id=<?=$user['id']?>">
                                             <i class="fa fa-camera"></i>
                                             Загрузить аватар
                                         </a>
-                                        <a href="#" class="dropdown-item" onclick="return confirm('are you sure?');">
+                                        <a href="controllers/delete.php?id=<?=$user['id'];?>" class="dropdown-item" onclick="return confirm('are you sure?');">
                                             <i class="fa fa-window-close"></i>
                                             Удалить
                                         </a>
