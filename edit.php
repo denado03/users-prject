@@ -6,7 +6,12 @@ require_once 'functions/register.php';
 if(!isLoggedIn()){
     redirectTo('page_login.php');
 }
+
 $user = getUserById($_GET['id']);
+
+if(!isAdmin($_SESSION['user']) && $_SESSION['user']['id'] !== $user['id']){
+    redirectTo('users.php');
+}
  
 
 ?>
@@ -38,7 +43,7 @@ $user = getUserById($_GET['id']);
                     <a class="nav-link" href="page_login.php">Войти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
+                    <a class="nav-link" href="controllers/logout.php">Выйти</a>
                 </li>
             </ul>
         </div>

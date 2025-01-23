@@ -30,14 +30,14 @@ function editUser($username, $job_title, $phone, $address, $user_id){
 
 }
 
-function setStatus($status, $user_id){
+function setStatus($status_id, $user_id){
     $pdo = dbConnect();
     $sql = "UPDATE users 
-            SET status = :status 
+            SET status_id = :status_id 
             WHERE id = :id";
     $statement = $pdo->prepare($sql);
     $statement->execute([
-        "status" => $status,
+        "status_id" => $status_id,
         "id" => $user_id
     ]);
 }
@@ -54,7 +54,7 @@ function setSocialNetwork($vk, $telegram, $instagram, $userId){
         "vk" => $vk,
         "telegram" => $telegram,
         "instagram" => $instagram,
-        "id" => $user_id
+        "id" => $userId
     ]);
 
 }
@@ -81,6 +81,7 @@ function passwordsEqual($password, $passwordConfirm){
 }
 function editSecurity($email, $password, $id){
     $pdo = dbConnect();
+
     $sql = "UPDATE users 
             SET email = :email,
             password = :password
@@ -88,7 +89,7 @@ function editSecurity($email, $password, $id){
     $statement = $pdo->prepare($sql);
     $statement->execute([
         "email" => $email,
-        "password" => $password,
+        "password" => password_hash($password, PASSWORD_DEFAULT),
         "id" => $id
     ]);
 }
@@ -100,6 +101,14 @@ function deleteUser($id){
     $statement->execute([
         "id" => $id
     ]);
+}
+
+function currentUserEmail($email, $id){
+    $user = getUserById($id);
+    if($user['email'] === $email){
+        return true;
+    }
+    return false;
 }
 
 

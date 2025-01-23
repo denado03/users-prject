@@ -92,6 +92,29 @@ function isAdmin($user){
         return true;
     }
     return false;
+}
+
+function getAllStatuses(){
+    $pdo = dbConnect();
+    $sql = "SELECT * FROM statuses";
+    $statement = $pdo->prepare($sql);
+    $statement->execute();
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
+function getUserStatus($id){
+    $pdo = dbConnect();
+    $sql = "SELECT s.value 
+    FROM users u
+    JOIN statuses s ON u.status_id = s.id
+    WHERE u.id = :user_id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "user_id" => $id
+    ]);
+
+    return $statement->fetch(PDO::FETCH_ASSOC);
 
 }
 

@@ -1,3 +1,21 @@
+<?php
+session_start();
+require_once 'functions/helpers.php';
+require_once 'functions/register.php';
+
+if(!isLoggedIn()){
+    redirectTo('page_login.php');
+}
+$user = getUserById($_GET['id']);
+
+// Проверка является ли пользователь админом и пытается перейти в редактирование не своего профиля
+if(!isAdmin($_SESSION['user']) && $_SESSION['user']['id'] !== $user['id']){
+    redirectTo('users.php');
+}
+
+$statuses = getAllStatuses();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +56,7 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="controllers/status.php" method="POST">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -52,11 +70,16 @@
                                         <!-- status -->
                                         <div class="form-group">
                                             <label class="form-label" for="example-select">Выберите статус</label>
-                                            <select class="form-control" id="example-select">
-                                                <option>Онлайн</option>
-                                                <option>Отошел</option>
-                                                <option>Не беспокоить</option>
+                                            <select name="status" class="form-control" id="example-select">
+                                                <?php foreach($statuses as $status):?>
+                                                <option 
+                                                value="<?=$status['id']?>"
+                                                <?php echo $user['status_id'] == $status['id'] ? 'selected' : ''?>                                                >
+                                                <?=$status['meaning']?>
+                                                </option>          
+                                                <?php endforeach; ?>
                                             </select>
+                                            <input name="user_id"type="hidden" value="<?=$user['id']?>">
                                         </div>
                                     </div>
                                     <div class="col-md-12 mt-3 d-flex flex-row-reverse">

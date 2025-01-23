@@ -9,6 +9,11 @@ if(!isLoggedIn()){
 
 $user = getUserById($_GET['id']);
 
+// Проверка является ли пользователь админом и пытается перейти в редактирование не своего профиля
+if(!isAdmin($_SESSION['user']) && $_SESSION['user']['id'] !== $user['id']){
+    redirectTo('users.php');
+}
+
 ?>
 
 <!DOCTYPE html>

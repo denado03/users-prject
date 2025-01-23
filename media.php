@@ -8,6 +8,11 @@ if(!isLoggedIn()){
 }
 $user = getUserById($_GET['id']);
 
+// Проверка является ли пользователь админом и пытается перейти в редактирование не своего профиля
+if(!isAdmin($_SESSION['user']) && $_SESSION['user']['id'] !== $user['id']){
+    redirectTo('users.php');
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +43,7 @@ $user = getUserById($_GET['id']);
                     <a class="nav-link" href="page_login.html">Войти</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Выйти</a>
+                    <a class="nav-link" href="controllers/logout.php">Выйти</a>
                 </li>
             </ul>
         </div>
@@ -50,13 +55,19 @@ $user = getUserById($_GET['id']);
             </h1>
 
         </div>
-        <form action="controllers/media.php" method="POST" >
+        <form action="controllers/media.php" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
                         <div class="panel-container">
                             <div class="panel-hdr">
                                 <h2>Текущий аватар</h2>
+                                <?php if(isset($_SESSION['danger'])): ?>
+                                <h5><?php 
+                                showFlash('danger');
+                                unset($_SESSION['danger']);
+                                ?></h5>
+                                <?php endif; ?>
                             </div>
                             <div class="panel-content">
                                 <div class="form-group">
@@ -65,7 +76,8 @@ $user = getUserById($_GET['id']);
 
                                 <div class="form-group">
                                     <label class="form-label" for="example-fileinput">Выберите аватар</label>
-                                    <input type="file" id="example-fileinput" class="form-control-file">
+                                    <input name="image" type="file" id="example-fileinput" class="form-control-file">
+                                    <input type="hidden" name="id" value="<?=$user['id']?>">
                                 </div>
 
 

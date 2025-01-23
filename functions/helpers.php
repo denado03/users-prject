@@ -3,7 +3,7 @@
 function dbConnect(){
     static $pdo;
     if($pdo === null){
-        $pdo = new PDO('mysql:host=localhost;dbname=diplom', 'root', '');
+        $pdo = new PDO('mysql:host=localhost;dbname=diplom; charset=UTF8', 'root', '');
     }
     return $pdo;
 }

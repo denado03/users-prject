@@ -83,9 +83,16 @@ $users = getAllUsers();
                     <div id="c_1" class="card border shadow-0 mb-g shadow-sm-hover" data-filter-tags="oliver kopyov">
                         <div class="card-body border-faded border-top-0 border-left-0 border-right-0 rounded-top">
                             <div class="d-flex flex-row align-items-center">
-                                <span class="status status-success mr-3">
+                                <?php $status = getUserStatus($user['id']);?>
+                    
+                                <span class="status status-<?=($status['value'] == 'online') ? 'success' :
+                                ($status['value'] == 'away' ? 'warning' : 'danger');
+                                ?> mr-3">
+                                <a href="page_profile.php?id=<?=$user['id']?>">
                                     <span class="rounded-circle profile-image d-block " style="background-image:url('<?=$user['image']?>'); background-size: cover;"></span>
+                                </a>
                                 </span>
+                                
                                 <div class="info-card-text flex-1">
                                     <a href="javascript:void(0);" class="fs-xl text-truncate text-truncate-lg text-info" data-toggle="dropdown" aria-expanded="false">
                                         <?=$user['username']?>
@@ -102,7 +109,7 @@ $users = getAllUsers();
                                         <a class="dropdown-item" href="security.php?id=<?=$user['id'];?>">
                                             <i class="fa fa-lock"></i>
                                         Безопасность</a>
-                                        <a class="dropdown-item" href="status.html">
+                                        <a class="dropdown-item" href="status.php?id=<?=$user['id'];?>">
                                             <i class="fa fa-sun"></i>
                                         Установить статус</a>
                                         <a class="dropdown-item" href="media.php?id=<?=$user['id']?>">

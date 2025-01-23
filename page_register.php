@@ -74,7 +74,7 @@ if(isLoggedIn()){
                                         ?>
                                     </div>
                                     <?php endif; ?>
-                                    <form id="js-login" novalidate="" action="model/register.php" method="POST">
+                                    <form id="js-login" novalidate="" action="controllers/register.php" method="POST">
                                         <div class="form-group">
                                             <label class="form-label" for="emailverify">Email</label>
                                             <input type="email" name="email" id="emailverify" class="form-control" placeholder="Эл. адрес" required>

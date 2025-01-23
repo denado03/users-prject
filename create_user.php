@@ -7,6 +7,8 @@ if(!isLoggedIn() || (!isAdmin(getAuthenticatedUser()))){
     redirectTo('page_login.php');
 }
 
+$statuses = getAllStatuses();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -121,9 +123,9 @@ if(!isLoggedIn() || (!isAdmin(getAuthenticatedUser()))){
                                 <div class="form-group">
                                     <label class="form-label" for="example-select">Выберите статус</label>
                                     <select name="status" class="form-control" id="example-select">
-                                        <option value="online">Онлайн</option>
-                                        <option value="away">Отошел</option>
-                                        <option value="do_not_disturb">Не беспокоить</option>
+                                        <?php foreach($statuses as $status) : ?>
+                                        <option value="<?=$status['id']?>"><?=$status['meaning']?></option>  
+                                        <?php endforeach; ?>                              
                                     </select>
                                 </div>
 

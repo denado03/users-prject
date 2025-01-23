@@ -16,6 +16,7 @@
     $telegram = $_POST['telegram'];
     $instagram = $_POST['instagram'];
     
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
     if(empty($email) || empty($password)){
         createFlash('validate', 'Введите емейл и пароль!');
         redirectTo('../create_user.php'); 
@@ -38,7 +39,7 @@
         
     }
     }
-    
+}
         
     
 
