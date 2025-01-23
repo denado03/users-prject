@@ -47,7 +47,9 @@ $users = getAllUsers();
         <main id="js-page-content" role="main" class="page-content mt-3">
             <?php if(isset($_SESSION['success'])): ?>
             <div class="alert alert-success">
-                Профиль успешно обновлен.
+                <?php showFlash('success');
+                unset($_SESSION['success']);
+                ?>
             </div>
             <?php endif; ?>
             <div class="subheader">
@@ -94,7 +96,7 @@ $users = getAllUsers();
                                         
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="edit.html">
+                                        <a class="dropdown-item" href="edit.php?id=<?=$user['id']?>">
                                             <i class="fa fa-edit"></i>
                                         Редактировать</a>
                                         <a class="dropdown-item" href="security.html">

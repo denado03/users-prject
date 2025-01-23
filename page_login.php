@@ -54,7 +54,7 @@ if(isLoggedIn()){
                 unset($_SESSION['warning']);?>
             </div>
         <?php endif; ?>
-            <form action="model/login.php" method="POST">
+            <form action="controllers/login.php" method="POST">
                 <div class="form-group">
                     <label class="form-label" for="username">Email</label>
                     <input name="email" type="email" id="username" class="form-control" placeholder="Эл. адрес" value="">

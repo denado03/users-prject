@@ -11,6 +11,17 @@ function findUserByEmail($email){
     return $result;
 }
 
+function getUserById($id){ 
+    $pdo = dbConnect();
+    $sql = "SELECT * FROM users WHERE id = :id";
+    $statement = $pdo->prepare($sql);
+    $statement->execute([
+        "id" => $id
+    ]);
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
+    return $result;
+}
+
 function getAllUsers(){
     $pdo = dbConnect();
     $sql = "SELECT * FROM users";

@@ -8,14 +8,18 @@
     $job_title = $_POST['job_title'];
     $phone = $_POST['phone'];
     $address = $_POST['address'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
+    $email = trim($_POST['email']);
+    $password = trim($_POST['password']);
     $status = $_POST['status'];
     $image = $_FILES['image'];
     $vk = $_POST['vk'];
     $telegram = $_POST['telegram'];
     $instagram = $_POST['instagram'];
     
+    if(empty($email) || empty($password)){
+        createFlash('validate', 'Введите емейл и пароль!');
+        redirectTo('../create_user.php'); 
+    } else {
 
     if(alreadyRegistered($email)){
         createFlash('danger', 'Пользователь с таким Email уже существует');
@@ -32,6 +36,7 @@
 
         redirectTo('../users.php');
         
+    }
     }
     
         

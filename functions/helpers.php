@@ -1,7 +1,10 @@
 <?php
 
 function dbConnect(){
-    $pdo = new PDO('mysql:host=localhost;dbname=diplom', 'root', '');
+    static $pdo;
+    if($pdo === null){
+        $pdo = new PDO('mysql:host=localhost;dbname=diplom', 'root', '');
+    }
     return $pdo;
 }
 
@@ -16,4 +19,4 @@ function showFlash($key){
 function redirectTo($path){
     header("Location: $path");
     exit;
-}
+} static $pdo = null;

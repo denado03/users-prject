@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once 'functions/helpers.php';
+require_once 'functions/register.php';
+
+if(!isLoggedIn()){
+    redirectTo('page_login.php');
+}
+$user = getUserById($_GET['id']);
+ 
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +50,7 @@
             </h1>
 
         </div>
-        <form action="">
+        <form action="controllers/edit.php" method="POST">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
@@ -50,26 +62,29 @@
                                 <!-- username -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Имя</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Иван иванов">
+                                    <input name="username" type="text" id="simpleinput" class="form-control" value="<?=$user['username']?>">
                                 </div>
 
                                 <!-- title -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Место работы</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Marlin Веб-разработчик">
+                                    <input name="job_title" type="text" id="simpleinput" class="form-control" value="<?=$user['job_title']?>">
                                 </div>
 
                                 <!-- tel -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Номер телефона</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="8 888 8888 88">
+                                    <input name="phone" type="text" id="simpleinput" class="form-control" value="<?=$user['phone']?>">
                                 </div>
 
                                 <!-- address -->
                                 <div class="form-group">
                                     <label class="form-label" for="simpleinput">Адрес</label>
-                                    <input type="text" id="simpleinput" class="form-control" value="Восточные Королевства, Штормград">
+                                    <input name="address" type="text" id="simpleinput" class="form-control" value="<?=$user['address']?>">
                                 </div>
+
+                                <input type="hidden" name="id" value="<?=$_GET['id']?>">
+
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">
                                     <button class="btn btn-warning">Редактировать</button>
                                 </div>
